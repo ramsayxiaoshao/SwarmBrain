@@ -5,6 +5,7 @@ Fig. 1 The framework of the interaction between SwarmBrain and StarCraft II envi
 Fig. 2 The framework of the Overmind Intelligence Matrix.
 
 ## Method description
+This is the code of utilizing the Large Language Model (LLM) to play StarCraft II.
 The SwarmBrain comprises two key components: 
 (1) an Overmind Intelligence Matrix, powered by state-of-the-art LLMs, is designed to orchestrate macro-level strategies from a high-level perspective. This matrix emulates the overarching consciousness of the Zerg intelligence brain, synthesizing strategic foresight with the aim of allocating resources, directing expansion, and coordinating multi-pronged assaults.
 (2) a Swarm ReflexNet, which is the agile counterpart to the calculated deliberation of the Overmind Intelligence Matrix. Due to the inherent latency in LLM reasoning, the Swarm ReflexNet employs a condition-response state machine framework, enabling expedited tactical responses for fundamental Zerg unit maneuvers.
@@ -15,6 +16,7 @@ The demo video: ([B站视频 https://www.bilibili.com/video/BV1jZ421a7b7/](https
 1. Currently, the code implementation is not consistent with the arXiv paper because we have made some improvements. 
 2. Since the performance of SwarmBrain is highly dependent on that of the LLM, there are times when the LLM may not perform well, causing SwarmBrain to struggle against the more challenging computer opponents.
 3. In this code version, we did not include the update process for the Tactical Retrospect Module and the Self-verification Module due to time constraints. These two modules were only added during the training process.
+4. I will continue to update the code to improve the capabilities of LLM operations.
 
 ## How to launch your own SwarmBrain?
 ### 1. Download the StarCraft II.
@@ -28,5 +30,14 @@ You need to replace your ChatGPT API in swarmbrain.py. If you don't know how to 
 
 ### 4. Launch the SwarmBrain
 Run swarmbrain_launch.py.
+If you want to try and beat LLM-based SwarmBrain, you can uncomment it below in swarmbrain_launch.py.
+```python
+run_game(
+        maps.get("AutomatonLE"),
+        [Human(Race.Terran),
+            Bot(Race.Zerg, SwarmBrain(early_values, mid_values, late_values, drone_attack, counterattack))],
+        realtime=True, save_replay_as="./videos/ZvT_Human.SC2Replay"
+    )
+```
 
 
