@@ -9,7 +9,7 @@ from sc2.bot_ai import BotAI
 from sc2.constants import *
 from sc2.data import Race, Difficulty, ActionResult
 from sc2.main import run_game
-from sc2.player import Bot, Computer
+from sc2.player import Bot, Computer, Human
 from sc2.unit import Unit
 from sc2.position import Point2, Point3
 from sc2.units import Units
@@ -2467,6 +2467,13 @@ def main():
          Computer(Race.Terran, Difficulty.Medium)],
         realtime=True, save_replay_as="./videos/ZvT_Medium.SC2Replay"
     )
+
+    # run_game(
+    #     maps.get("AutomatonLE"),
+    #     [Human(Race.Terran),
+    #         Bot(Race.Zerg, SwarmBrain(early_values, mid_values, late_values, drone_attack, counterattack))],
+    #     realtime=True, save_replay_as="./videos/ZvT_Human.SC2Replay"
+    # )
 
 
 if __name__ == '__main__':
