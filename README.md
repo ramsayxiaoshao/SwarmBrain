@@ -24,7 +24,7 @@ Firstly, you need to download the StarCraft II ([https://starcraft2.blizzard.com
 You can download the official Blizzard map from ([Blizzard/s2client-proto](https://github.com/Blizzard/s2client-proto?tab=readme-ov-file#downloads)). Then, extract these maps into the root of the SC2 maps directory (Mine is **C:\Program Files (x86)\StarCraft II\Maps**). To be noted, for this code version, you can only use "**AutomatonLE**" from "**Ladder 2019 Season 1**". 
 
 ### 3. Replace the ChatGPT API
-You need to replace your ChatGPT API in config.py. If you don't know how to find your ChatGPT API, please read this website [where-do-i-find-my-openai-api-key](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
+You need to replace your ChatGPT API in swarmbrain.py. If you don't know how to find your ChatGPT API, please read this website [where-do-i-find-my-openai-api-key](https://help.openai.com/en/articles/4936850-where-do-i-find-my-openai-api-key).
 
 ### 4. Launch the SwarmBrain
 Run swarmbrain_launch.py.
