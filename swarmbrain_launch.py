@@ -17,28 +17,24 @@ from sc2.units import Units
 from swarmbrain import *
 
 
-global command_first
-command_first = []
-
-
 class SwarmBrain(BotAI):
-    def __init__(self, early_values, mid_values, late_values, drone_attack, counterattack):
+    def __init__(self, command_first, early_values, mid_values, late_values, drone_attack, counterattack):
         super().__init__()
-        print("early_values", early_values)
-        print("mid_values", mid_values)
-        print("late_values", late_values)
+        # print("early_values", early_values)
+        # print("mid_values", mid_values)
+        # print("late_values", late_values)
         self.early_zergling_num, self.early_baneling_num, self.early_roach_num, self.early_ravager_num, self.early_hydralisk_num, self.early_infestor_num, self.early_swarm_host_num, self.early_mutalisk_num, self.early_corruptor_num, self.early_viper_num, self.early_ultralisk_num, self.early_brood_lord_num = early_values
         self.mid_zergling_num, self.mid_baneling_num, self.mid_roach_num, self.mid_ravager_num, self.mid_hydralisk_num, self.mid_infestor_num, self.mid_swarm_host_num, self.mid_mutalisk_num, self.mid_corruptor_num, self.mid_viper_num, self.mid_ultralisk_num, self.mid_brood_lord_num = mid_values
         self.late_zergling_num, self.late_baneling_num, self.late_roach_num, self.late_ravager_num, self.late_hydralisk_num, self.late_infestor_num, self.late_swarm_host_num, self.late_mutalisk_num, self.late_corruptor_num, self.late_viper_num, self.late_ultralisk_num, self.late_brood_lord_num = late_values
 
-        print("self.early_hydralisk_num", self.early_hydralisk_num)
-        print("self.mid_hydralisk_num", self.mid_hydralisk_num)
-        print("self.late_hydralisk_num", self.late_hydralisk_num)
+        # print("self.early_hydralisk_num", self.early_hydralisk_num)
+        # print("self.mid_hydralisk_num", self.mid_hydralisk_num)
+        # print("self.late_hydralisk_num", self.late_hydralisk_num)
 
         self.start_location_label = None
         self.parsed_commands = []
 
-        self.command_list = []
+        self.command_list = command_first
         self.building_tasks = []
         self.attack_tasks = []
 
@@ -106,13 +102,9 @@ class SwarmBrain(BotAI):
         self.fight_back = False
         self.queen_spread_progress = {}
 
-
     async def on_start(self):
         #     # self.client.game_step = 2
         #     # await self.client.debug_show_map()
-        self.command_list = command_first
-        # print("first self.command_list: ", self.command_list)  # ['(Larva, A1)->(Morph)->(Drone)',
-
         start_location_key = tuple(self.start_location)
         # print("start_location_key ", start_location_key)
         self.start_location_label = self.mineral_location_labels.get(start_location_key)
@@ -237,35 +229,80 @@ class SwarmBrain(BotAI):
         if drones > 0:
             summary += f"{drones} Drones"
         if overlords > 0:
-            summary += f", {overlords} Overlords"
+            if summary:
+                summary += f", {overlords} Overlords"
+            else:
+                summary += f"{overlords} Overlords"
         if queens > 0:
-            summary += f", {queens} Queens"
+            if summary:
+                summary += f", {queens} Queens"
+            else:
+                summary += f"{queens} Queens"
         if zerglings > 0:
-            summary += f", {zerglings} Zerglings"
+            if summary:
+                summary += f", {zerglings} Zerglings"
+            else:
+                summary += f"{zerglings} Zerglings"
         if overseers > 0:
-            summary += f", {overseers} Overseers"
+            if summary:
+                summary += f", {overseers} Overseers"
+            else:
+                summary += f"{overseers} Overseers"
         if roaches > 0:
-            summary += f", {roaches} Roaches"
+            if summary:
+                summary += f", {roaches} Roaches"
+            else:
+                summary += f"{roaches} Roaches"
         if ravagers > 0:
-            summary += f", {ravagers} Ravagers"
+            if summary:
+                summary += f", {ravagers} Ravagers"
+            else:
+                summary += f"{ravagers} Ravagers"
         if banelings > 0:
-            summary += f", {banelings} Banelings"
+            if summary:
+                summary += f", {banelings} Banelings"
+            else:
+                summary += f"{banelings} Banelings"
         if hydralisks > 0:
-            summary += f", {hydralisks} Hydralisks"
+            if summary:
+                summary += f", {hydralisks} Hydralisks"
+            else:
+                summary += f"{hydralisks} Hydralisks"
         if infestors > 0:
-            summary += f", {infestors} Infestors"
+            if summary:
+                summary += f", {infestors} Infestors"
+            else:
+                summary += f"{infestors} Infestors"
         if swarmhosts > 0:
-            summary += f", {swarmhosts} Swarm Hosts"
+            if summary:
+                summary += f", {swarmhosts} Swarm Hosts"
+            else:
+                summary += f"{swarmhosts} Swarm Hosts"
         if mutalisks > 0:
-            summary += f", {mutalisks} Mutalisks"
+            if summary:
+                summary += f", {mutalisks} Mutalisks"
+            else:
+                summary += f"{mutalisks} Mutalisks"
         if corruptors > 0:
-            summary += f", {corruptors} Corruptors"
+            if summary:
+                summary += f", {corruptors} Corruptors"
+            else:
+                summary += f"{corruptors} Corruptors"
         if vipers > 0:
-            summary += f", {vipers} Vipers"
+            if summary:
+                summary += f", {vipers} Vipers"
+            else:
+                summary += f"{vipers} Vipers"
         if ultralisks > 0:
-            summary += f", {ultralisks} Ultralisks"
+            if summary:
+                summary += f", {ultralisks} Ultralisks"
+            else:
+                summary += f"{ultralisks} Ultralisks"
         if broodlords > 0:
-            summary += f", {broodlords} Brood Lords"
+            if summary:
+                summary += f", {broodlords} Brood Lords"
+            else:
+                summary += f"{broodlords} Brood Lords"
 
         return summary
 
@@ -287,29 +324,62 @@ class SwarmBrain(BotAI):
 
         summary = f""
         if zerglings > 0:
-            summary += f"{zerglings} Zerglings"
+            summary += f", {zerglings} Zerglings"
         if roaches > 0:
-            summary += f", {roaches} Roaches"
+            if summary:
+                summary += f", {roaches} Roaches"
+            else:
+                summary += f"{roaches} Roaches"
         if ravagers > 0:
-            summary += f", {ravagers} Ravagers"
+            if summary:
+                summary += f", {ravagers} Ravagers"
+            else:
+                summary += f"{ravagers} Ravagers"
         if banelings > 0:
-            summary += f", {banelings} Banelings"
+            if summary:
+                summary += f", {banelings} Banelings"
+            else:
+                summary += f"{banelings} Banelings"
         if hydralisks > 0:
-            summary += f", {hydralisks} Hydralisks"
+            if summary:
+                summary += f", {hydralisks} Hydralisks"
+            else:
+                summary += f"{hydralisks} Hydralisks"
         if infestors > 0:
-            summary += f", {infestors} Infestors"
+            if summary:
+                summary += f", {infestors} Infestors"
+            else:
+                summary += f"{infestors} Infestors"
         if swarmhosts > 0:
-            summary += f", {swarmhosts} Swarm Hosts"
+            if summary:
+                summary += f", {swarmhosts} Swarm Hosts"
+            else:
+                summary += f"{swarmhosts} Swarm Hosts"
         if mutalisks > 0:
-            summary += f", {mutalisks} Mutalisks"
+            if summary:
+                summary += f", {mutalisks} Mutalisks"
+            else:
+                summary += f"{mutalisks} Mutalisks"
         if corruptors > 0:
-            summary += f", {corruptors} Corruptors"
+            if summary:
+                summary += f", {corruptors} Corruptors"
+            else:
+                summary += f"{corruptors} Corruptors"
         if vipers > 0:
-            summary += f", {vipers} Vipers"
+            if summary:
+                summary += f", {vipers} Vipers"
+            else:
+                summary += f"{vipers} Vipers"
         if ultralisks > 0:
-            summary += f", {ultralisks} Ultralisks"
+            if summary:
+                summary += f", {ultralisks} Ultralisks"
+            else:
+                summary += f"{ultralisks} Ultralisks"
         if broodlords > 0:
-            summary += f", {broodlords} Brood Lords"
+            if summary:
+                summary += f", {broodlords} Brood Lords"
+            else:
+                summary += f"{broodlords} Brood Lords"
 
         return summary, army_damage
 
@@ -318,7 +388,7 @@ class SwarmBrain(BotAI):
         for townhall in self.townhalls.ready:
             townhall_location_label = self.mineral_location_labels.get(townhall.position)
 
-            buildings_near_townhall = self.structures.closer_than(25, townhall.position)
+            buildings_near_townhall = self.structures.closer_than(20, townhall.position)
 
             extractor_near_townhall = buildings_near_townhall.of_type({UnitTypeId.EXTRACTOR})
             spawningpool_near_townhall = buildings_near_townhall.of_type({UnitTypeId.SPAWNINGPOOL})
@@ -361,8 +431,6 @@ class SwarmBrain(BotAI):
                 unit_summary += f", {ultraliskcavern_near_townhall.amount} Ultralisk Cavern"
             if greaterspire_near_townhall.amount > 0:
                 unit_summary += f", {greaterspire_near_townhall.amount} Greater Spire"
-
-            # Assign the summary to the distribution dict
             distribution[townhall_location_label] = unit_summary
 
         return distribution
@@ -456,39 +524,87 @@ class SwarmBrain(BotAI):
 
             unit_summary = f""
             if scv_near_mineral.amount > 0:
-                unit_summary += f"{scv_near_mineral.amount} SCVs are gathering near {location_label}"
+                unit_summary += f"{scv_near_mineral.amount} SCVs"
             if marine_near_mineral.amount > 0:
-                unit_summary += f", {marine_near_mineral.amount} Marines are idling"
+                if unit_summary:
+                    unit_summary += f", {marine_near_mineral.amount} Marines"
+                else:
+                    unit_summary += f"{marine_near_mineral.amount} Marines"
             if reaper_near_mineral.amount > 0:
-                unit_summary += f", {reaper_near_mineral.amount} Reapers are idling"
+                if unit_summary:
+                    unit_summary += f", {reaper_near_mineral.amount} Reapers"
+                else:
+                    unit_summary += f"{reaper_near_mineral.amount} Reapers"
             if marauder_near_mineral.amount > 0:
-                unit_summary += f", {marauder_near_mineral.amount} Marauders are idling"
+                if unit_summary:
+                    unit_summary += f", {marauder_near_mineral.amount} Marauders"
+                else:
+                    unit_summary += f"{marauder_near_mineral.amount} Marauders"
             if ghost_near_mineral.amount > 0:
-                unit_summary += f", {ghost_near_mineral.amount} Ghosts are idling"
+                if unit_summary:
+                    unit_summary += f", {ghost_near_mineral.amount} Ghosts"
+                else:
+                    unit_summary += f"{ghost_near_mineral.amount} Ghosts"
             if hellion_near_mineral.amount > 0:
-                unit_summary += f", {hellion_near_mineral.amount} Hellions are idling"
+                if unit_summary:
+                    unit_summary += f", {hellion_near_mineral.amount} Hellions"
+                else:
+                    unit_summary += f"{hellion_near_mineral.amount} Hellions"
             if widowmine_near_mineral.amount > 0:
-                unit_summary += f", {widowmine_near_mineral.amount} Widow Mines are idling"
+                if unit_summary:
+                    unit_summary += f", {widowmine_near_mineral.amount} Widow Mines"
+                else:
+                    unit_summary += f"{widowmine_near_mineral.amount} Widow Mines"
             if cyclone_near_mineral.amount > 0:
-                unit_summary += f", {cyclone_near_mineral.amount} Cyclones are idling"
+                if unit_summary:
+                    unit_summary += f", {cyclone_near_mineral.amount} Cyclones"
+                else:
+                    unit_summary += f"{cyclone_near_mineral.amount} Cyclones"
             if siegetank_near_mineral.amount > 0:
-                unit_summary += f", {siegetank_near_mineral.amount} Siege Tanks are idling"
+                if unit_summary:
+                    unit_summary += f", {siegetank_near_mineral.amount} Siege Tanks"
+                else:
+                    unit_summary += f"{siegetank_near_mineral.amount} Siege Tanks"
             if hellbat_near_mineral.amount > 0:
-                unit_summary += f", {hellbat_near_mineral.amount} Hellbats are idling"
+                if unit_summary:
+                    unit_summary += f", {hellbat_near_mineral.amount} Hellbats"
+                else:
+                    unit_summary += f"{hellbat_near_mineral.amount} Hellbats"
             if thor_near_mineral.amount > 0:
-                unit_summary += f", {thor_near_mineral.amount} Thors are idling"
+                if unit_summary:
+                    unit_summary += f", {thor_near_mineral.amount} Thors"
+                else:
+                    unit_summary += f"{thor_near_mineral.amount} Thors"
             if viking_near_mineral.amount > 0:
-                unit_summary += f", {viking_near_mineral.amount} Vikings are idling"
+                if unit_summary:
+                    unit_summary += f", {viking_near_mineral.amount} Vikings"
+                else:
+                    unit_summary += f"{viking_near_mineral.amount} Vikings"
             if medivac_near_mineral.amount > 0:
-                unit_summary += f", {medivac_near_mineral.amount} Medivacs are idling"
+                if unit_summary:
+                    unit_summary += f", {medivac_near_mineral.amount} Medivacs"
+                else:
+                    unit_summary += f"{medivac_near_mineral.amount} Medivacs"
             if liberator_near_mineral.amount > 0:
-                unit_summary += f", {liberator_near_mineral.amount} Liberators are idling"
+                if unit_summary:
+                    unit_summary += f", {liberator_near_mineral.amount} Liberators"
+                else:
+                    unit_summary += f"{liberator_near_mineral.amount} Liberators"
             if raven_near_mineral.amount > 0:
-                unit_summary += f", {raven_near_mineral.amount} Ravens are idling"
+                if unit_summary:
+                    unit_summary += f", {raven_near_mineral.amount} Ravens"
+                else:
+                    unit_summary += f"{raven_near_mineral.amount} Ravens"
             if banshee_near_mineral.amount > 0:
-                unit_summary += f", {banshee_near_mineral.amount} Banshees are idling"
+                if unit_summary:
+                    unit_summary += f", {banshee_near_mineral.amount} Banshees"
+                else:
+                    unit_summary += f"{banshee_near_mineral.amount} Banshees"
             if battlecruiser_near_mineral.amount > 0:
-                unit_summary += f", {battlecruiser_near_mineral.amount} Battle Cruisers are idling"
+                if unit_summary:
+                    unit_summary += f", {battlecruiser_near_mineral.amount} Battle Cruisers"
+                else:
+                    unit_summary += f"{battlecruiser_near_mineral.amount} Battle Cruisers"
 
             if unit_summary == "":
                 continue
@@ -521,35 +637,80 @@ class SwarmBrain(BotAI):
         if marines > 0:
             summary += f"{marines} Marines"
         if reapers > 0:
-            summary += f", {reapers} Reapers"
+            if summary:
+                summary += f", {reapers} Reapers"
+            else:
+                summary += f", {reapers} Reapers"
         if marauders > 0:
-            summary += f", {marauders} Marauders"
+            if summary:
+                summary += f", {marauders} Marauders"
+            else:
+                summary += f"{marauders} Marauders"
         if ghosts > 0:
-            summary += f", {ghosts} Ghosts"
+            if summary:
+                summary += f", {ghosts} Ghosts"
+            else:
+                summary += f"{ghosts} Ghosts"
         if hellions > 0:
-            summary += f", {hellions} Hellions"
+            if summary:
+                summary += f", {hellions} Hellions"
+            else:
+                summary += f"{hellions} Hellions"
         if widowmines > 0:
-            summary += f", {widowmines} Widow Mines"
+            if summary:
+                summary += f", {widowmines} Widow Mines"
+            else:
+                summary += f", {widowmines} Widow Mines"
         if cyclones > 0:
-            summary += f", {cyclones} Cyclones"
+            if summary:
+                summary += f", {cyclones} Cyclones"
+            else:
+                summary += f"{cyclones} Cyclones"
         if siegetanks > 0:
-            summary += f", {siegetanks} Siege Tanks"
+            if summary:
+                summary += f", {siegetanks} Siege Tanks"
+            else:
+                summary += f"{siegetanks} Siege Tanks"
         if hellbats > 0:
-            summary += f", {hellbats} Hellbats"
+            if summary:
+                summary += f", {hellbats} Hellbats"
+            else:
+                summary += f"{hellbats} Hellbats"
         if thors > 0:
-            summary += f", {thors} Thors"
+            if summary:
+                summary += f", {thors} Thors"
+            else:
+                summary += f"{thors} Thors"
         if vikings > 0:
-            summary += f", {vikings} Vikings"
+            if summary:
+                summary += f", {vikings} Vikings"
+            else:
+                summary += f"{vikings} Vikings"
         if medivacs > 0:
-            summary += f", {medivacs} Medivacs"
+            if summary:
+                summary += f", {medivacs} Medivacs"
+            else:
+                summary += f"{medivacs} Medivacs"
         if liberators > 0:
-            summary += f", {liberators} Liberators"
+            if summary:
+                summary += f", {liberators} Liberators"
+            else:
+                summary += f"{liberators} Liberators"
         if ravens > 0:
-            summary += f", {ravens} Ravens"
+            if summary:
+                summary += f", {ravens} Ravens"
+            else:
+                summary += f"{ravens} Ravens"
         if banshees > 0:
-            summary += f", {banshees} Banshees"
+            if summary:
+                summary += f", {banshees} Banshees"
+            else:
+                summary += f"{banshees} Banshees"
         if battlecruisers > 0:
-            summary += f", {battlecruisers} Battlecruisers"
+            if summary:
+                summary += f", {battlecruisers} Battlecruisers"
+            else:
+                summary += f"{battlecruisers} Battlecruisers"
 
         return summary, enemy_damage
 
@@ -581,33 +742,75 @@ class SwarmBrain(BotAI):
             if commandcenter_near_townhall.amount > 0:
                 unit_summary += f"{commandcenter_near_townhall.amount} Command Center"
             if refinery_near_townhall.amount > 0:
-                unit_summary += f", {refinery_near_townhall.amount} Refinery"
+                if unit_summary:
+                    unit_summary += f", {refinery_near_townhall.amount} Refinery"
+                else:
+                    unit_summary += f"{refinery_near_townhall.amount} Refinery"
             if supplydepot_near_townhall.amount > 0:
-                unit_summary += f", {supplydepot_near_townhall.amount} Supply Depot"
+                if unit_summary:
+                    unit_summary += f", {supplydepot_near_townhall.amount} Supply Depot"
+                else:
+                    unit_summary += f"{supplydepot_near_townhall.amount} Supply Depot"
             if engineeringbay_near_townhall.amount > 0:
-                unit_summary += f", {engineeringbay_near_townhall.amount} Engineering Bay"
+                if unit_summary:
+                    unit_summary += f", {engineeringbay_near_townhall.amount} Engineering Bay"
+                else:
+                    unit_summary += f"{engineeringbay_near_townhall.amount} Engineering Bay"
             if missileturret_near_townhall.amount > 0:
-                unit_summary += f", {missileturret_near_townhall.amount} Missile Turret"
+                if unit_summary:
+                    unit_summary += f", {missileturret_near_townhall.amount} Missile Turret"
+                else:
+                    unit_summary += f"{missileturret_near_townhall.amount} Missile Turret"
             if sensortower_near_townhall.amount > 0:
-                unit_summary += f", {sensortower_near_townhall.amount} Sensor Tower"
+                if unit_summary:
+                    unit_summary += f", {sensortower_near_townhall.amount} Sensor Tower"
+                else:
+                    unit_summary += f"{sensortower_near_townhall.amount} Sensor Tower"
             if planetaryfortress_near_townhall.amount > 0:
-                unit_summary += f", {planetaryfortress_near_townhall.amount} Planetary Fortress"
+                if unit_summary:
+                    unit_summary += f", {planetaryfortress_near_townhall.amount} Planetary Fortress"
+                else:
+                    unit_summary += f"{planetaryfortress_near_townhall.amount} Planetary Fortress"
             if barracks_near_townhall.amount > 0:
-                unit_summary += f", {barracks_near_townhall.amount} Barracks"
+                if unit_summary:
+                    unit_summary += f", {barracks_near_townhall.amount} Barracks"
+                else:
+                    unit_summary += f"{barracks_near_townhall.amount} Barracks"
             if bunker_near_townhall.amount > 0:
-                unit_summary += f", {bunker_near_townhall.amount} Bunker"
+                if unit_summary:
+                    unit_summary += f", {bunker_near_townhall.amount} Bunker"
+                else:
+                    unit_summary += f"{bunker_near_townhall.amount} Bunker"
             if ghostacademy_near_townhall.amount > 0:
-                unit_summary += f", {ghostacademy_near_townhall.amount} Ghost Academy"
+                if unit_summary:
+                    unit_summary += f", {ghostacademy_near_townhall.amount} Ghost Academy"
+                else:
+                    unit_summary += f"{ghostacademy_near_townhall.amount} Ghost Academy"
             if factory_near_townhall.amount > 0:
-                unit_summary += f", {factory_near_townhall.amount} Factory"
+                if unit_summary:
+                    unit_summary += f", {factory_near_townhall.amount} Factory"
+                else:
+                    unit_summary += f"{factory_near_townhall.amount} Factory"
             if orbitalcommand_near_townhall.amount > 0:
-                unit_summary += f", {orbitalcommand_near_townhall.amount} Orbital Command"
+                if unit_summary:
+                    unit_summary += f", {orbitalcommand_near_townhall.amount} Orbital Command"
+                else:
+                    unit_summary += f"{orbitalcommand_near_townhall.amount} Orbital Command"
             if armory_near_townhall.amount > 0:
-                unit_summary += f", {armory_near_townhall.amount} Armory"
+                if unit_summary:
+                    unit_summary += f", {armory_near_townhall.amount} Armory"
+                else:
+                    unit_summary += f", {armory_near_townhall.amount} Armory"
             if starport_near_townhall.amount > 0:
-                unit_summary += f", {starport_near_townhall.amount} Starport"
+                if unit_summary:
+                    unit_summary += f", {starport_near_townhall.amount} Starport"
+                else:
+                    unit_summary += f"{starport_near_townhall.amount} Starport"
             if fusioncore_near_townhall.amount > 0:
-                unit_summary += f", {fusioncore_near_townhall.amount} Fusion Core"
+                if unit_summary:
+                    unit_summary += f", {fusioncore_near_townhall.amount} Fusion Core"
+                else:
+                    unit_summary += f"{fusioncore_near_townhall.amount} Fusion Core"
 
             if unit_summary == "":
                 continue
@@ -834,8 +1037,6 @@ class SwarmBrain(BotAI):
             if not self.is_attack_command_issued:
                 for defender in defensive_units:
                     defender.move(rally_point)
-
-
 
     async def overmind_attack_iter(self):
         print("overmind_attack_iter")
@@ -2458,12 +2659,13 @@ def main():
     print(output1)
     matches = re.findall(r'\(.*?\)->\(.*?\)->\(.*?\)', output1)
 
+    command_first = []
     for match in matches:
         command_first.append(match)
 
     run_game(
         maps.get("AutomatonLE"),
-        [Bot(Race.Zerg, SwarmBrain(early_values, mid_values, late_values, drone_attack, counterattack)),
+        [Bot(Race.Zerg, SwarmBrain(command_first, early_values, mid_values, late_values, drone_attack, counterattack)),
          Computer(Race.Terran, Difficulty.Medium)],
         realtime=True, save_replay_as="./videos/ZvT_Medium.SC2Replay"
     )
