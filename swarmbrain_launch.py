@@ -324,7 +324,7 @@ class SwarmBrain(BotAI):
 
         summary = f""
         if zerglings > 0:
-            summary += f", {zerglings} Zerglings"
+            summary += f"{zerglings} Zerglings"
         if roaches > 0:
             if summary:
                 summary += f", {roaches} Roaches"
